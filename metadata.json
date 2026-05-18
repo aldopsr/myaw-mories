@@ -1,0 +1,8 @@
+{
+  "name": "Myaw Mories",
+  "description": "A kawaii-inspired digital scrapbook and stationery boutique featuring handcrafted journals, stickers, and adorable cat-themed accessories.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

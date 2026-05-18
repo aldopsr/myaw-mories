@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Be Vietnam Pro", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", var(--font-sans);
+
+  --color-surface: #fff8f7;
+  --color-surface-dim: #e2d8d7;
+  --color-surface-bright: #fff8f7;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #fcf1f1;
+  --color-surface-container: #f6ebeb;
+  --color-surface-container-high: #f0e6e5;
+  --color-surface-container-highest: #ebe0e0;
+  
+  --color-on-surface: #1f1a1b;
+  --color-on-surface-variant: #514347;
+  
+  --color-primary: #864d61;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #ffb7ce;
+  --color-on-primary-container: #7b4458;
+  
+  --color-secondary: #6c586d;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #f5daf4;
+  --color-on-secondary-container: #725e73;
+  
+  --color-tertiary: #60603e;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #cfcda3;
+  --color-on-tertiary-container: #575736;
+  
+  --color-background: #fff8f7;
+  --color-on-background: #1f1a1b;
+
+  --rounded-xl: 1.5rem;
+  --rounded-full: 9999px;
+  
+  --spacing-scrapbook-overlap: -12px;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-on-surface font-sans antialiased;
+  }
+}
+
+@layer components {
+  .headline-xl {
+    @apply font-display font-extrabold text-[48px] leading-[56px] tracking-tight;
+  }
+  .headline-lg {
+    @apply font-display font-bold text-[32px] leading-[40px];
+  }
+  .body-lg {
+    @apply font-sans font-normal text-[18px] leading-[28px];
+  }
+  .body-md {
+    @apply font-sans font-normal text-[16px] leading-[24px];
+  }
+  .label-sm {
+    @apply font-sans font-semibold text-[12px] leading-[16px] tracking-wider uppercase;
+  }
+
+  .polaroid {
+    @apply bg-white p-3 pb-10 shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-surface-container-highest transition-transform duration-300;
+  }
+
+  .scalloped-edge {
+    --mask: radial-gradient(12px at 15px 0,#0000 98%,#000) -15px 0/30px 100%;
+    mask: var(--mask);
+    -webkit-mask: var(--mask);
+  }
+}
+
+.washi-tape {
+  @apply relative py-2 px-6 bg-primary-container text-on-primary-container font-medium inline-block;
+  mask-image: url("data:image/svg+xml,%3Csvg width='100' height='40' viewBox='0 0 100 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 L95 2 L100 0 L98 20 L100 40 L5 38 L0 40 L2 20 Z' fill='black'/%3E%3C/svg%3E");
+  mask-size: 100% 100%;
+}
