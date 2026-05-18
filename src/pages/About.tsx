@@ -50,7 +50,7 @@ export default function About() {
                 <div className="polaroid -rotate-3 hover:rotate-0 transition-all duration-500">
                    <div className="aspect-square bg-surface-container overflow-hidden rounded-sm mb-4">
                       <img 
-                        src="/src/assets/images/scrapbook_hero_1779100728856.png" 
+                        src="/images/scrapbook_hero_1779100728856.png" 
                         alt="Workspace" 
                         className="w-full h-full object-cover"
                         referrerPolicy="no-referrer"

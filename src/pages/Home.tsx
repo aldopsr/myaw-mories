@@ -3,11 +3,11 @@ import PolaroidCard from "../components/PolaroidCard";
 import { ArrowRight, Sparkles, Star, Heart } from "lucide-react";
 
 const IMAGES = {
-  logo: "/src/assets/images/myaw_mories_logo_1779100715275.png",
-  hero: "/src/assets/images/scrapbook_hero_1779100728856.png",
-  scrapbook: "/src/assets/images/product_scrapbook_1779100744975.png",
-  keychain: "/src/assets/images/product_keychain_1779100759746.png",
-  pins: "/src/assets/images/product_pins_1779100775167.png"
+  logo: "/images/myaw_mories_logo_1779100715275.png",
+  hero: "/images/scrapbook_hero_1779100728856.png",
+  scrapbook: "/images/product_scrapbook_1779100744975.png",
+  keychain: "/images/product_keychain_1779100759746.png",
+  pins: "/images/product_pins_1779100775167.png"
 };
 
 export default function Home({ onNavigate }: { onNavigate: (page: string) => void }) {
