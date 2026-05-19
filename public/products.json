@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "title": "To My Favorite Person",
+    "category": "Scrapbooks",
+    "price": "Rp 85.000",
+    "image": "/images/product_scrapbook_1779100744975.png",
+    "images": [
+      { "src": "/images/product_scrapbook_1779100744975.png", "previewPdf": "/previews/to_my_favorite_person.pdf" },
+      { "src": "/images/product_scrapbook_1779100744975.png", "previewPdf": null },
+      { "src": "/images/product_scrapbook_1779100744975.png", "previewPdf": null }
+    ],
+    "description": "Scrapbook anniversary handmade penuh kenangan.",
+    "sizes": ["15x15 cm", "20x20 cm"],
+    "levels": ["Basic (Stickers only)", "Semi (Tape + Florals)", "Full (All out magic)"],
+    "features": ["14 pages of premium art paper", "Softcover with matte finish", "Flexible gold ring binding", "Space for 32 custom photos"],
+    "stock": true,
+    "previewPdf": "/previews/to_my_favorite_person.pdf"
+  },
+  {
+    "id": 2,
+    "title": "Sparkle Paw Charm",
+    "category": "Acrylic Keychains",
+    "price": "Rp 35.000",
+    "image": "/images/product_keychain_1779100759746.png",
+    "images": [
+      { "src": "/images/product_keychain_1779100759746.png", "previewPdf": null },
+      { "src": "/images/product_keychain_1779100759746.png", "previewPdf": null }
+    ],
+    "description": "Acrylic keychain holographic glitter rose gold clasp.",
+    "sizes": ["Standard"],
+    "levels": [],
+    "features": [],
+    "stock": true,
+    "previewPdf": null
+  }
+]

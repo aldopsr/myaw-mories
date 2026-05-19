@@ -1,17 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import PolaroidCard from "../components/PolaroidCard";
 import { Search, Sparkles, Heart } from "lucide-react";
 import { useWishlist } from "../hooks/useWishlist";
 
-const PRODUCTS = [
-  { id: 1, title: "Kitty Dreams Journal", category: "Scrapbooks", price: "$32.00", image: "/images/product_scrapbook_1779100744975.png", description: "A 40-page handmade sanctuary for your most precious cat memories." },
-  { id: 2, title: "Sparkle Paw Charm", category: "Acrylic Keychains", price: "$12.50", image: "/images/product_keychain_1779100759746.png", description: "Crystal clear acrylic with holographic glitter and a rose gold clasp." },
-  { id: 3, title: "Berry Sweet Pins", category: "Pin Buttons", price: "$8.00", image: "/images/product_pins_1779100775167.png", description: "Set of 3 matte-finish badges featuring our original strawberry cat art." },
-  { id: 4, title: "Lazy Sunday Pack", category: "Stickers", price: "$15.00", image: "/images/scrapbook_hero_1779100728856.png", description: "12 waterproof vinyl stickers of cats doing absolutely nothing." },
-  { id: 5, title: "DIY Memory Box", category: "Scrapbooks", price: "$45.00", image: "/images/product_scrapbook_1779100744975.png", description: "Full kit including tape, stamps, and a mini lavender photo album." },
-  { id: 6, title: "Teacup Cat Standee", category: "Acrylic", price: "$18.00", image: "/images/product_keychain_1779100759746.png", description: "A desktop companion made of premium 5mm thick polished acrylic." },
-];
+interface Product {
+  id: number;
+  title: string;
+  category: string;
+  price: string;
+  image: string;
+  description: string;
+  sizes: string[];
+  levels: string[];
+  stock: boolean;
+  previewPdf: string | null;
+}
 
 const CATEGORIES = ["All", "Scrapbooks", "Acrylic Keychains", "Pin Buttons", "Stickers"];
 
@@ -21,10 +25,23 @@ interface CatalogProps {
 }
 
 export default function Catalog({ onSelectProduct, wishlist }: CatalogProps) {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredProducts = PRODUCTS.filter((p) => {
+  // Fetch dari JSON
+  useEffect(() => {
+    fetch("/products.json")
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
+  const filtered = products.filter((p) => {
     const matchCat = activeCategory === "All" || p.category === activeCategory;
     const matchSearch = p.title.toLowerCase().includes(searchQuery.toLowerCase());
     return matchCat && matchSearch;
@@ -61,47 +78,45 @@ export default function Catalog({ onSelectProduct, wishlist }: CatalogProps) {
       </section>
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
-          <AnimatePresence mode="popLayout">
-            {filteredProducts.map((product, idx) => (
-              <motion.div key={product.id} layout initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} transition={{ duration: 0.3 }} className="group relative">
-                {idx % 3 === 0 && (
-                  <div className="absolute -top-4 -left-4 text-primary animate-bounce delay-100 z-10">
-                    <Sparkles size={24} />
-                  </div>
-                )}
+        {loading ? (
+          <div className="text-center py-20">
+            <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+            <p className="text-on-surface-variant italic font-serif">Loading treasures...</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+            <AnimatePresence mode="popLayout">
+              {filtered.map((product, idx) => (
+                <motion.div key={product.id} layout initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} transition={{ duration: 0.3 }} className="group relative">
+                  {idx % 3 === 0 && <div className="absolute -top-4 -left-4 text-primary animate-bounce z-10"><Sparkles size={24} /></div>}
 
-                {/* Wishlist button */}
-                <button
-                  onClick={() => wishlist.toggleItem(product)}
-                  className={`absolute top-3 right-3 z-20 w-9 h-9 rounded-full flex items-center justify-center transition-all shadow-sm ${wishlist.isWishlisted(product.id) ? "bg-primary text-white" : "bg-white/90 text-on-surface-variant hover:text-primary"}`}
-                  aria-label="Toggle wishlist"
-                >
-                  <Heart size={16} className={wishlist.isWishlisted(product.id) ? "fill-white" : ""} />
-                </button>
+                  {/* Badge PDF preview tersedia */}
+                  {product.previewPdf && (
+                    <div className="absolute top-3 left-3 z-20 px-2 py-1 bg-primary text-white text-[10px] font-bold rounded-full">
+                      📖 Preview
+                    </div>
+                  )}
 
-                <PolaroidCard image={product.image} title={product.title} price={product.price}
-                  className="relative z-10" rotation={idx % 2 === 0 ? -1.5 : 1.5}
-                  onClick={() => onSelectProduct(product.id)} />
-
-                <div className="mt-4 px-4 flex justify-between items-center">
-                  <p className="text-xs text-on-surface-variant italic font-serif truncate max-w-[70%]">{product.description}</p>
-                  <button onClick={() => onSelectProduct(product.id)}
-                    className="px-4 py-1.5 bg-primary/10 text-primary text-[10px] uppercase tracking-wider font-bold rounded-full hover:bg-primary hover:text-white transition-all">
-                    View Detail
+                  {/* Wishlist button */}
+                  <button onClick={() => wishlist.toggleItem(product)}
+                    className={`absolute top-3 right-3 z-20 w-9 h-9 rounded-full flex items-center justify-center transition-all shadow-sm ${wishlist.isWishlisted(product.id) ? "bg-primary text-white" : "bg-white/90 text-on-surface-variant hover:text-primary"}`}>
+                    <Heart size={16} className={wishlist.isWishlisted(product.id) ? "fill-white" : ""} />
                   </button>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
 
-        {filteredProducts.length === 0 && (
-          <div className="py-20 text-center">
-            <div className="w-16 h-16 bg-surface-container border-2 border-dashed border-surface-container-highest rounded-full flex items-center justify-center mx-auto mb-4 opacity-50">
-              <Search size={24} className="text-on-surface-variant" />
-            </div>
-            <p className="text-on-surface-variant italic font-serif">No treasures found matching your search...</p>
+                  <PolaroidCard image={product.image} title={product.title} price={product.price}
+                    className="relative z-10" rotation={idx % 2 === 0 ? -1.5 : 1.5}
+                    onClick={() => onSelectProduct(product.id)} />
+
+                  <div className="mt-4 px-4 flex justify-between items-center">
+                    <p className="text-xs text-on-surface-variant italic font-serif truncate max-w-[70%]">{product.description}</p>
+                    <button onClick={() => onSelectProduct(product.id)}
+                      className="px-4 py-1.5 bg-primary/10 text-primary text-[10px] uppercase tracking-wider font-bold rounded-full hover:bg-primary hover:text-white transition-all">
+                      View Detail
+                    </button>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
         )}
       </section>
