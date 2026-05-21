@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Heart, Instagram, Home as HomeIcon, LayoutGrid, Info } from "lucide-react";
+import { Heart, Instagram, Home as HomeIcon, LayoutGrid } from "lucide-react";
 
 interface NavbarProps {
   activePage: string;
@@ -23,7 +23,7 @@ export default function Navbar({ activePage, setActivePage, wishlistCount = 0 }:
       {/* ── Top Navbar ── */}
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-surface-container-highest">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20 md:h-24">
+          <div className="flex justify-between items-center h-16 md:h-24">
             
             {/* Logo - Dibuat Jauh Lebih Besar */}
             <div className="flex items-center cursor-pointer" onClick={() => setActivePage("home")}>
@@ -31,7 +31,7 @@ export default function Navbar({ activePage, setActivePage, wishlistCount = 0 }:
                 whileHover={{ scale: 1.05, rotate: -2 }}
                 src="/images/myaw_mories_logo_1779100715275.png"
                 alt="Myaw Mories"
-                className="h-14 md:h-20 w-auto object-contain"
+                className="h-25 md:h-20 w-auto object-contain"
               />
             </div>
 
@@ -84,7 +84,7 @@ export default function Navbar({ activePage, setActivePage, wishlistCount = 0 }:
       {/* ── Mobile Bottom Navigation (Satu-satunya nav untuk mobile) ── */}
       <nav className="md:hidden fixed bottom-4 left-4 right-4 z-50">
         {/* Floating dock design biar lebih Gen Z */}
-        <div className="bg-white/90 backdrop-blur-xl border border-surface-container-highest shadow-xl rounded-full flex justify-around items-center h-16 px-2">
+        <div className="bg-white/60 backdrop-blur-xl border border-white/40 shadow-xl rounded-full flex justify-around items-center h-16 px-2">
           {[
             { id: "home", label: "Home", icon: HomeIcon },
             { id: "catalog", label: "Catalog", icon: LayoutGrid },
@@ -129,7 +129,7 @@ export default function Navbar({ activePage, setActivePage, wishlistCount = 0 }:
       </nav>
 
       {/* Spacer bawah biar konten nggak ketutup nav melayang */}
-      <div className="md:hidden h-24" />
+      <div className="md:hidden h-20" />
     </>
   );
 }
