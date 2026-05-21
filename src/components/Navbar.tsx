@@ -1,6 +1,5 @@
-import { Heart, Menu, X, Instagram } from "lucide-react";
-import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
+import { Heart, Instagram, Home as HomeIcon, LayoutGrid, Info } from "lucide-react";
 
 interface NavbarProps {
   activePage: string;
@@ -9,8 +8,6 @@ interface NavbarProps {
 }
 
 export default function Navbar({ activePage, setActivePage, wishlistCount = 0 }: NavbarProps) {
-  const [isOpen, setIsOpen] = useState(false);
-
   const navLinks = [
     { name: "Home", id: "home" },
     { name: "Catalog", id: "catalog" },
@@ -22,126 +19,117 @@ export default function Navbar({ activePage, setActivePage, wishlistCount = 0 }:
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-surface-container-highest">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+    <>
+      {/* ── Top Navbar ── */}
+      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-surface-container-highest">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20 md:h-24">
+            
+            {/* Logo - Dibuat Jauh Lebih Besar */}
+            <div className="flex items-center cursor-pointer" onClick={() => setActivePage("home")}>
+              <motion.img
+                whileHover={{ scale: 1.05, rotate: -2 }}
+                src="/images/myaw_mories_logo_1779100715275.png"
+                alt="Myaw Mories"
+                className="h-14 md:h-20 w-auto object-contain"
+              />
+            </div>
 
-          {/* Logo */}
-          <div className="flex items-center cursor-pointer" onClick={() => setActivePage("home")}>
-            <img
-              src="/images/myaw_mories_logo_1779100715275.png"
-              alt="Myaw Mories"
-              className="h-30 w-auto object-contain"
-            />
-          </div>
-
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex space-x-8">
-            {navLinks.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => setActivePage(link.id)}
-                className={`relative px-1 py-2 text-sm font-medium transition-colors ${
-                  activePage === link.id
-                    ? "text-primary"
-                    : "text-on-surface-variant hover:text-primary"
-                }`}
-              >
-                {link.name}
-                {activePage === link.id && (
-                  <motion.div
-                    layoutId="nav-underline"
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-container"
-                  />
-                )}
-              </button>
-            ))}
-          </nav>
-
-          {/* Icons */}
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={() => setActivePage("wishlist")}
-              className={`relative p-2 transition-colors ${
-                activePage === "wishlist"
-                  ? "text-primary"
-                  : "text-on-surface-variant hover:text-primary"
-              }`}
-              aria-label="Wishlist"
-            >
-              <Heart size={20} className={activePage === "wishlist" ? "fill-primary" : ""} />
-              {wishlistCount > 0 && (
-                <span className="absolute top-0 right-0 h-4 w-4 bg-primary text-white text-[10px] flex items-center justify-center rounded-full">
-                  {wishlistCount}
-                </span>
-              )}
-            </button>
-
-            <button
-              onClick={handleInstagram}
-              className="hidden sm:flex ml-2 px-4 py-2 bg-primary text-white text-xs font-semibold rounded-full hover:opacity-90 transition-all shadow-sm items-center gap-1.5"
-            >
-              <Instagram size={14} /> Order via Instagram
-            </button>
-
-            <button
-              className="md:hidden p-2 text-on-surface-variant"
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Nav */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-b border-surface-container-highest overflow-hidden"
-          >
-            <div className="px-4 pt-2 pb-6 space-y-1">
+            {/* Desktop Nav */}
+            <nav className="hidden md:flex space-x-8">
               {navLinks.map((link) => (
                 <button
                   key={link.id}
-                  onClick={() => { setActivePage(link.id); setIsOpen(false); }}
-                  className={`block w-full text-left px-3 py-4 text-base font-medium ${
-                    activePage === link.id
-                      ? "text-primary bg-surface-container-low"
-                      : "text-on-surface-variant hover:bg-surface-container-lowest"
+                  onClick={() => setActivePage(link.id)}
+                  className={`relative px-1 py-2 text-sm font-medium transition-colors ${
+                    activePage === link.id ? "text-primary" : "text-on-surface-variant hover:text-primary"
                   }`}
                 >
                   {link.name}
+                  {activePage === link.id && (
+                    <motion.div layoutId="nav-underline" className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-container" />
+                  )}
                 </button>
               ))}
+            </nav>
+
+            <div className="hidden md:flex items-center gap-2">
               <button
-                onClick={() => { setActivePage("wishlist"); setIsOpen(false); }}
-                className={`flex items-center gap-2 w-full text-left px-3 py-4 text-base font-medium ${
-                  activePage === "wishlist"
-                    ? "text-primary bg-surface-container-low"
-                    : "text-on-surface-variant hover:bg-surface-container-lowest"
+                onClick={() => setActivePage("wishlist")}
+                className={`relative p-2 transition-colors ${
+                  activePage === "wishlist" ? "text-primary" : "text-on-surface-variant hover:text-primary"
                 }`}
+                aria-label="Wishlist"
               >
-                <Heart size={18} /> Wishlist
+                <Heart size={20} className={activePage === "wishlist" ? "fill-primary" : ""} />
                 {wishlistCount > 0 && (
-                  <span className="ml-auto text-xs bg-primary text-white px-2 py-0.5 rounded-full">
+                  <span className="absolute top-0 right-0 h-4 w-4 bg-primary text-white text-[10px] flex items-center justify-center rounded-full">
                     {wishlistCount}
                   </span>
                 )}
               </button>
+
+              {/* Tombol Instagram dikembalikan ke style aslinya */}
               <button
                 onClick={handleInstagram}
-                className="w-full mt-4 px-4 py-3 bg-primary text-white text-sm font-semibold rounded-full flex items-center justify-center gap-2"
+                className="ml-2 px-4 py-2 bg-primary text-white text-xs font-semibold rounded-full hover:opacity-90 transition-all shadow-sm items-center gap-1.5 flex"
               >
-                <Instagram size={18} /> Order via Instagram
+                <Instagram size={14} /> Order via Instagram
               </button>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
+          </div>
+        </div>
+      </header>
+
+      {/* ── Mobile Bottom Navigation (Satu-satunya nav untuk mobile) ── */}
+      <nav className="md:hidden fixed bottom-4 left-4 right-4 z-50">
+        {/* Floating dock design biar lebih Gen Z */}
+        <div className="bg-white/90 backdrop-blur-xl border border-surface-container-highest shadow-xl rounded-full flex justify-around items-center h-16 px-2">
+          {[
+            { id: "home", label: "Home", icon: HomeIcon },
+            { id: "catalog", label: "Catalog", icon: LayoutGrid },
+            { id: "about", label: "About", icon: Info },
+            { id: "wishlist", label: "Wishlist", icon: Heart, count: wishlistCount },
+          ].map((item) => {
+            const Icon = item.icon;
+            const isActive = activePage === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => setActivePage(item.id)}
+                className="relative flex flex-col items-center gap-0.5 px-4 py-1.5 transition-all group"
+              >
+                <motion.div 
+                  whileTap={{ scale: 0.8 }}
+                  className={`p-1.5 rounded-full transition-all ${isActive ? "bg-primary/15" : ""}`}
+                >
+                  <Icon
+                    size={22}
+                    className={isActive ? "text-primary" : "text-on-surface-variant"}
+                    fill={isActive && item.id === "wishlist" ? "currentColor" : "none"}
+                  />
+                </motion.div>
+                
+                {isActive && (
+                   <motion.div 
+                     layoutId="mobile-dot"
+                     className="w-1 h-1 bg-primary rounded-full absolute -bottom-1"
+                   />
+                )}
+
+                {item.count !== undefined && item.count > 0 && (
+                  <span className="absolute top-1 right-2 h-4 w-4 bg-primary text-white text-[9px] flex items-center justify-center rounded-full font-bold shadow-sm">
+                    {item.count}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </nav>
+
+      {/* Spacer bawah biar konten nggak ketutup nav melayang */}
+      <div className="md:hidden h-24" />
+    </>
   );
 }

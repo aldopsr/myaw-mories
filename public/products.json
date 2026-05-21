@@ -33,5 +33,21 @@
     "features": [],
     "stock": true,
     "previewPdf": null
+  },
+  {
+    "id": 3,
+    "title": "To My Favorite Person",
+    "category": "Scrapbooks",
+    "price": "Rp 85.000",
+    "image": "/images/product_scrapbook_1779100744975.png",
+    "images": [
+      { "src": "/images/product_scrapbook_1779100744975.png", "previewPdf": "/previews/to_my_favorite_person.pdf" },
+      { "src": "/images/product_scrapbook_1779100744975.png", "previewPdf": null },
+      { "src": "/images/product_scrapbook_1779100744975.png", "previewPdf": null }
+    ],
+    "description": "Scrapbook dengan dominasi warna merah yang bold, manis, dan gemesin ❤️ \n Dibuat buat nyimpen berbagai momen favorit kamu dengan vibe yang fun dan nyaman dilihat. Cocok dipakai untuk banyak tema dan bisa diisi pakai foto pilihan kamu sendiri ✨",
+    "features": ["Theme : Red", "Size : A5 Portrait", "Photo : Custom by customer", "Version : Digital / Print","Style : Fun & Cute"],
+    "stock": true,
+    "previewPdf": "/previews/to_my_favorite_person.pdf"
   }
 ]

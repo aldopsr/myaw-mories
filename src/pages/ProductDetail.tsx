@@ -200,11 +200,21 @@ export default function ProductDetail({ productId, onBack, wishlist }: ProductDe
                   <p className="text-4xl font-display font-extrabold text-primary">{product.price}</p>
                 </div>
                 <button
-                  onClick={() => navigator.clipboard?.writeText(window.location.href)}
-                  className="flex items-center gap-2 text-primary hover:underline font-bold text-sm"
-                >
-                  <Share2 size={16} /> Share
-                </button>
+  onClick={() => {
+    const url = window.location.href;
+    const text = `${product.title} - ${product.price}`;
+    if (navigator.share) {
+      navigator.share({ title: product.title, text, url });
+    } else {
+      navigator.clipboard?.writeText(url).then(() => {
+        alert("Link copied to clipboard! 🐱");
+      });
+    }
+  }}
+  className="flex items-center gap-2 text-primary hover:underline font-bold text-sm"
+>
+  <Share2 size={16} /> Share
+</button>
               </div>
 
               {product.sizes?.length > 0 && (
@@ -253,15 +263,19 @@ export default function ProductDetail({ productId, onBack, wishlist }: ProductDe
               )}
 
               {features.length > 0 && (
-                <div className="space-y-3 mb-8">
-                  {features.map((f, i) => (
-                    <div key={i} className="flex items-center gap-3 text-xs font-medium text-on-surface-variant">
-                      <CheckCircle2 size={16} className="text-primary-container" /> {f}
-                    </div>
-                  ))}
-                </div>
-              )}
-
+  <div className="mb-8">
+    <p className="font-display font-bold text-on-surface text-sm mb-4 flex items-center gap-2">
+      Detail Produk
+    </p>
+    <div className="space-y-3">
+      {features.map((f, i) => (
+        <div key={i} className="flex items-center gap-3 text-xs font-medium text-on-surface-variant">
+          <CheckCircle2 size={16} className="text-primary-container" /> {f}
+        </div>
+      ))}
+    </div>
+  </div>
+)}
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
