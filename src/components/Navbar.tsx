@@ -11,7 +11,7 @@ export default function Navbar({ activePage, setActivePage, wishlistCount = 0 }:
   const navLinks = [
     { name: "Home", id: "home" },
     { name: "Catalog", id: "catalog" },
-    { name: "About", id: "about" },
+    // { name: "About", id: "about" },
   ];
 
   const handleInstagram = () => {
@@ -88,7 +88,7 @@ export default function Navbar({ activePage, setActivePage, wishlistCount = 0 }:
           {[
             { id: "home", label: "Home", icon: HomeIcon },
             { id: "catalog", label: "Catalog", icon: LayoutGrid },
-            { id: "about", label: "About", icon: Info },
+            // { id: "about", label: "About", icon: Info },
             { id: "wishlist", label: "Wishlist", icon: Heart, count: wishlistCount },
           ].map((item) => {
             const Icon = item.icon;
