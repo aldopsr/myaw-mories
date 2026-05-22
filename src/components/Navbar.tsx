@@ -31,7 +31,7 @@ export default function Navbar({ activePage, setActivePage, wishlistCount = 0 }:
                 whileHover={{ scale: 1.05, rotate: -2 }}
                 src="/images/myaw_mories_logo_1779100715275.png"
                 alt="Myaw Mories"
-                className="h-25 md:h-20 w-auto object-contain"
+                className="h-23 md:h-20 w-auto object-contain"
               />
             </div>
 
