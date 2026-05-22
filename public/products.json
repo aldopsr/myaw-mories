@@ -9,7 +9,7 @@
       {
         "src": "/images/product_scrapbook_1779100744975.png",
         "previewPdf": "/previews/to_my_favorite_person.pdf",
-        "label": "Cover",
+        "label": "Merah",
         "description": "Cover scrapbook dengan desain floral pink handmade.",
         "sizes": ["15x15 cm", "20x20 cm"],
         "levels": ["Basic (Stickers only)", "Semi (Tape + Florals)", "Full (All out magic)"],
@@ -18,7 +18,7 @@
       {
         "src": "/images/foto_isi_halaman.png",
         "previewPdf": null,
-        "label": "Isi Halaman",
+        "label": "Putih",
         "description": "Setiap halaman didekorasi manual dengan washi tape dan stiker.",
         "sizes": ["15x15 cm", "20x20 cm"],
         "levels": ["Basic (Stickers only)", "Semi (Tape + Florals)", "Full (All out magic)"],
@@ -27,7 +27,7 @@
       {
         "src": "/images/foto_packaging.png",
         "previewPdf": null,
-        "label": "Packaging",
+        "label": "Pink",
         "description": "Dikemas dengan kotak gift premium dan ribbon satin.",
         "sizes": ["Standard box"],
         "levels": [],

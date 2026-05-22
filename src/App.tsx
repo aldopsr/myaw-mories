@@ -33,6 +33,7 @@ export default function App() {
         <ProductDetail
           productId={selectedProductId}
           onBack={() => handleNavigate("catalog")}
+          onSelectProduct={handleSelectProduct}
           wishlist={wishlist}
         />
       );

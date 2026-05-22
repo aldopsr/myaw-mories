@@ -91,11 +91,13 @@ const FALLBACK: Record<number, Product> = {
 interface ProductDetailProps {
   productId: number;
   onBack: () => void;
+  onSelectProduct: (id: number) => void;
   wishlist: ReturnType<typeof useWishlist>;
 }
 
-export default function ProductDetail({ productId, onBack, wishlist }: ProductDetailProps) {
+export default function ProductDetail({ productId, onBack, onSelectProduct, wishlist }: ProductDetailProps) {
   const [product, setProduct] = useState<Product>(FALLBACK[productId] ?? FALLBACK[1]);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedLevel, setSelectedLevel] = useState("");
   const [showPreview, setShowPreview] = useState(false);
@@ -118,6 +120,7 @@ export default function ProductDetail({ productId, onBack, wishlist }: ProductDe
     fetch("/products.json")
       .then((res) => res.json())
       .then((data: Product[]) => {
+        setAllProducts(data);
         const found = data.find((p) => p.id === productId);
         if (found) {
           setProduct(found);
@@ -324,17 +327,7 @@ export default function ProductDetail({ productId, onBack, wishlist }: ProductDe
               </motion.p>
             </AnimatePresence>
 
-            <div className="flex items-center gap-2 pb-4">
-              {/* Share button — now fully functional */}
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleShare}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-primary/5 hover:bg-primary/10 rounded-full text-primary font-bold text-xs transition-colors"
-              >
-                <Share2 size={14} /> Share
-              </motion.button>
-            </div>
+
 
             <AnimatePresence mode="wait">
               <motion.p
@@ -422,62 +415,93 @@ export default function ProductDetail({ productId, onBack, wishlist }: ProductDe
               </div>
             )}
 
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={handleInstagram}
-              className="w-full py-4 bg-primary text-white font-display font-extrabold text-lg rounded-full shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
-            >
-              <Instagram size={20} /> Order via Instagram
-            </motion.button>
-
-            <p className="text-center mt-3 text-[10px] text-on-surface-variant/70 italic font-serif">
-              Processing time: 5-7 kitty-nap business days
-            </p>
-
-            <div className="flex justify-center pt-2">
+            {/* ── Action Bar: Share + Wishlist + Order ── */}
+            <div className="flex items-center gap-2 mt-2">
+              {/* Share */}
               <motion.button
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={handleShare}
+                aria-label="Share produk"
+                className="w-12 h-12 flex-shrink-0 rounded-full bg-primary-container/40 border border-primary/20 flex items-center justify-center text-primary hover:bg-primary-container/70 transition-colors"
+              >
+                <Share2 size={18} />
+              </motion.button>
+
+              {/* Wishlist */}
+              <motion.button
+                whileHover={{ scale: 1.08 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => wishlist.toggleItem(product)}
-                className={`flex items-center gap-1.5 px-4 py-2 rounded-full transition-colors ${
-                  wishlisted ? "text-primary bg-primary/5" : "text-on-surface-variant hover:text-primary"
+                aria-label={wishlisted ? "Hapus dari wishlist" : "Tambah ke wishlist"}
+                className={`w-12 h-12 flex-shrink-0 rounded-full border flex items-center justify-center transition-all ${
+                  wishlisted
+                    ? "bg-primary border-primary text-white shadow-md shadow-primary/30"
+                    : "bg-primary-container/40 border-primary/20 text-primary hover:bg-primary-container/70"
                 }`}
               >
-                <Heart size={16} className={wishlisted ? "fill-primary text-primary" : ""} />
-                <span className="text-xs font-bold">
-                  {wishlisted ? "Saved to Wishlist ✓" : "Add to Wishlist"}
-                </span>
+                <Heart size={18} className={wishlisted ? "fill-white" : ""} />
+              </motion.button>
+
+              {/* Order — takes remaining space */}
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={handleInstagram}
+                className="flex-1 py-3.5 bg-primary text-white font-display font-extrabold text-base rounded-full shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
+              >
+                <Instagram size={18} /> Order via Instagram
               </motion.button>
             </div>
+
+            <p className="text-center mt-2.5 text-[10px] text-on-surface-variant/60 italic font-serif">
+              Processing time: 5–7 kitty-nap business days 🐾
+            </p>
 
           </motion.div>
         </div>
 
-        {/* Related products */}
-        <div className="mt-20 md:mt-36 border-t border-surface-container-highest pt-12">
-          <h2 className="text-lg sm:text-2xl font-display font-extrabold text-on-surface mb-6">
-            Other Kitties Liked...
-          </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-            {[1, 2, 3, 4].map((idx) => (
-              <motion.div key={idx} whileHover={{ y: -4 }} className="group cursor-pointer">
-                <div className={`polaroid p-2 pb-7 shadow-sm group-hover:shadow-md transition-all ${
-                  idx % 2 === 0 ? "-rotate-2" : "rotate-1"
-                } group-hover:rotate-0`}>
-                  <div className="aspect-square bg-surface-container rounded-sm overflow-hidden mb-2">
-                    <img
-                      src="/images/product_keychain_1779100759746.png"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      alt="Related product"
-                    />
-                  </div>
-                  <p className="text-center text-xs font-black text-on-surface truncate px-1">Kitty Treasure #{idx}</p>
-                  <p className="text-center text-[10px] font-bold text-primary mt-0.5">Rp 25.000</p>
-                </div>
-              </motion.div>
-            ))}
+        {/* Related products — dari products.json, exclude produk yang sedang dibuka */}
+        {allProducts.filter((p) => p.id !== productId).length > 0 && (
+          <div className="mt-20 md:mt-36 border-t border-surface-container-highest pt-12">
+            <h2 className="text-lg sm:text-2xl font-display font-extrabold text-on-surface mb-6">
+              Other Kitties Liked... 🐾
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+              {allProducts
+                .filter((p) => p.id !== productId)
+                .slice(0, 4)
+                .map((p, idx) => (
+                  <motion.div
+                    key={p.id}
+                    whileHover={{ y: -4 }}
+                    onClick={() => onSelectProduct(p.id)}
+                    className="group cursor-pointer"
+                  >
+                    <div className={`polaroid p-2 pb-7 shadow-sm group-hover:shadow-md transition-all ${
+                      idx % 2 === 0 ? "-rotate-2" : "rotate-1"
+                    } group-hover:rotate-0`}>
+                      <div className="aspect-square bg-surface-container rounded-sm overflow-hidden mb-2">
+                        {p.image ? (
+                          <img
+                            src={p.image}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            alt={p.title}
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-primary-container/30 text-3xl">
+                            🐱
+                          </div>
+                        )}
+                      </div>
+                      <p className="text-center text-xs font-black text-on-surface truncate px-1">{p.title}</p>
+                      <p className="text-center text-[10px] font-bold text-primary mt-0.5">{p.price}</p>
+                    </div>
+                  </motion.div>
+                ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {showPreview && activeImage.previewPdf && (
           <ScrapbookPreview

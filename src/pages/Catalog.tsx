@@ -30,13 +30,14 @@ interface CatalogProps {
   wishlist: ReturnType<typeof useWishlist>;
 }
 
-// Skeleton card component
 function SkeletonCard() {
   return (
     <div className="animate-pulse">
-      <div className="bg-surface-container-highest rounded-2xl aspect-square mb-3" />
-      <div className="h-4 bg-surface-container-highest rounded-full w-3/4 mb-2" />
-      <div className="h-3 bg-surface-container-highest rounded-full w-1/2" />
+      <div className="bg-white p-3 pb-10 border border-surface-container-highest shadow-sm">
+        <div className="aspect-square bg-surface-container-high rounded-sm mb-4" />
+        <div className="h-4 bg-surface-container-high rounded-full w-3/4 mx-auto mb-2" />
+        <div className="h-3 bg-surface-container rounded-full w-1/2 mx-auto" />
+      </div>
     </div>
   );
 }
@@ -50,20 +51,25 @@ export default function Catalog({ onSelectProduct, wishlist }: CatalogProps) {
   useEffect(() => {
     fetch("/products.json")
       .then((res) => res.json())
-      .then((data) => { setProducts(data); setLoading(false); })
-      .catch(() => setLoading(false));
+      .then((data) => {
+        console.log("[Catalog] products loaded:", data);
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("[Catalog] failed to load products.json:", err);
+        setLoading(false);
+      });
   }, []);
 
   const filtered = products.filter((p) => {
     const matchCat = activeCategory === "All" || p.category === activeCategory;
-    const matchSearch = p.title.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchSearch = (p.title ?? "").toLowerCase().includes(searchQuery.toLowerCase());
     return matchCat && matchSearch;
   });
 
   return (
-    // pb-28 untuk mobile agar konten tidak tertutup bottom nav
     <div className="bg-surface min-h-screen pb-28 md:pb-12 relative overflow-hidden">
-
       <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }} className="absolute top-10 left-[8%] text-primary/20 pointer-events-none hidden sm:block">
         <Sparkles size={32} />
       </motion.div>
@@ -71,7 +77,8 @@ export default function Catalog({ onSelectProduct, wishlist }: CatalogProps) {
         <Star size={40} fill="currentColor" />
       </motion.div>
 
-      <section className="pt-1 pb-8 md:pt-20 md:pb-14 text-center px-4 relative z-10">
+      {/* Header */}
+      <section className="pt-8 pb-8 md:pt-20 md:pb-14 text-center px-4 relative z-10">
         <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="inline-block mb-3">
           <span className="washi-tape px-6 md:px-10 py-2 md:py-3 text-lg md:text-3xl font-display font-extrabold tracking-wide inline-flex items-center gap-2">
             Our Magical Treasures 🌟
@@ -82,8 +89,8 @@ export default function Catalog({ onSelectProduct, wishlist }: CatalogProps) {
         </p>
       </section>
 
+      {/* Search + Filter */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Search */}
         <div className="relative mb-6 max-w-lg mx-auto">
           <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50" />
           <input
@@ -95,7 +102,6 @@ export default function Catalog({ onSelectProduct, wishlist }: CatalogProps) {
           />
         </div>
 
-        {/* Category filter */}
         <div className="flex gap-2 overflow-x-auto pb-4 mb-8 scrollbar-hide">
           {CATEGORIES.map((cat) => (
             <motion.button
@@ -113,13 +119,12 @@ export default function Catalog({ onSelectProduct, wishlist }: CatalogProps) {
           ))}
         </div>
 
-        {/* Content */}
+        {/* Grid */}
         {loading ? (
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 sm:gap-6 lg:gap-12">
             {Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)}
           </div>
         ) : filtered.length === 0 ? (
-          // Empty state
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -128,12 +133,8 @@ export default function Catalog({ onSelectProduct, wishlist }: CatalogProps) {
             <div className="w-20 h-20 bg-primary-container/30 rounded-full flex items-center justify-center mb-4">
               <PackageSearch size={36} className="text-primary/50" />
             </div>
-            <h3 className="font-display font-bold text-on-surface text-lg mb-2">
-              Hmm, no treasures found 🐱
-            </h3>
-            <p className="text-on-surface-variant text-sm italic font-serif mb-6">
-              Try a different keyword or category!
-            </p>
+            <h3 className="font-display font-bold text-on-surface text-lg mb-2">Hmm, no treasures found 🐱</h3>
+            <p className="text-on-surface-variant text-sm italic font-serif mb-6">Try a different keyword or category!</p>
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={() => { setSearchQuery(""); setActiveCategory("All"); }}
@@ -180,7 +181,22 @@ export default function Catalog({ onSelectProduct, wishlist }: CatalogProps) {
                       <Heart size={15} className={isWish ? "fill-white" : ""} />
                     </motion.button>
 
-                    <PolaroidCard product={product} onClick={() => onSelectProduct(product.id)} />
+                    <div
+                      className="cursor-pointer"
+                      onClick={() => onSelectProduct(product.id)}
+                    >
+                      <PolaroidCard
+                        image={product.image}
+                        title={product.title}
+                        price={product.price}
+                        className="shadow-md group-hover:shadow-xl transition-shadow duration-300"
+                        rotation={idx % 2 === 0 ? -1.8 : 1.8}
+                      />
+                    </div>
+
+                    <p className="sm:hidden text-center text-[10px] text-on-surface-variant/50 mt-1.5 italic font-serif">
+                      ketuk untuk detail
+                    </p>
                   </motion.div>
                 );
               })}
