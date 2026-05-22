@@ -15,7 +15,7 @@ export default function Footer() {
               className="h-20 w-auto object-contain mb-2 mx-auto sm:mx-0"
             />
             <p className="text-on-surface-variant text-xs leading-relaxed max-w-xs">
-              Spreading whiskers and sparkles since 2024.
+              More Stories, More MYAWMORIES
             </p>
           </div>
 
@@ -30,9 +30,9 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="pt-5 border-t border-surface-container-highest flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-on-surface-variant/60 italic">
-          <p>© 2024 Myaw Mories. Sprinkled with love and kitty magic.</p>
+          <p>© 2026 Myaw Mories. Sprinkled with love and kitty magic.</p>
           <div className="flex items-center gap-1">
-            <Heart size={9} className="text-primary fill-primary" /> Made with love
+            <Heart size={9} className="text-primary fill-primary" /> zadebeg
           </div>
         </div>
       </div>

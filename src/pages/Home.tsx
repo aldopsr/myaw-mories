@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import PolaroidCard from "../components/PolaroidCard";
-import { ArrowRight, Sparkles, Star, Heart, Instagram, Package, MessageCircle, Gift } from "lucide-react";
+import { 
+  ArrowRight, Sparkles, Star, Heart, Instagram, 
+  Package, MessageCircle, Gift, Plus, Check 
+} from "lucide-react"; // 💡 Tambah Plus & Check buat visual bundle
 
 const IMAGES = {
   hero: "/images/scrapbook_hero_1779100728856.png",
@@ -68,6 +71,9 @@ const MARQUEE_ITEMS = [
 
 export default function Home({ onNavigate }: { onNavigate: (page: string) => void }) {
   const [featured, setFeatured] = useState<Product[]>([]);
+  
+  // 💡 UX STATE: Buat nyimpen nama interaktif di Personalized Note Section
+  const [noteName, setNoteName] = useState("");
 
   useEffect(() => {
     fetch("/products.json")
@@ -145,7 +151,7 @@ export default function Home({ onNavigate }: { onNavigate: (page: string) => voi
 
             <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="relative mt-8 lg:mt-0">
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-primary-container/40 rounded-full blur-3xl -z-10" />
-              <motion.div whileHover={{ rotate: 2, scale: 1.02 }} className="polaroid -rotate-3 transition-transform duration-500 max-w-[280px] sm:max-w-sm mx-auto shadow-xl bg-white p-3 pb-6 rounded-md">
+              <motion.div whileHover={{ rotate: 2, scale: 1.02 }} className="polaroid -rotate-3 transition-transform duration-500 max-w-[280px] sm:max-w-[240px] mx-auto shadow-xl bg-white p-3 pb-6 rounded-md">
                 <div className="aspect-[4/3] overflow-hidden rounded-sm mb-3">
                   <img src={IMAGES.hero} alt="Scrapbook set" className="w-full h-full object-cover" />
                 </div>
@@ -223,7 +229,6 @@ export default function Home({ onNavigate }: { onNavigate: (page: string) => voi
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 relative">
-            {/* Connector line — desktop only */}
             <div className="hidden sm:block absolute top-12 left-[20%] right-[20%] h-0.5 border-t-2 border-dashed border-primary/20 z-0" />
 
             {HOW_TO_ORDER.map((item, i) => (
@@ -261,120 +266,227 @@ export default function Home({ onNavigate }: { onNavigate: (page: string) => voi
       </section>
 
       {/* ── Testimonials — Sticky Notes ── */}
-<section className="py-14 md:py-24 bg-secondary-container/20 px-4 overflow-hidden">
-  <div className="max-w-5xl mx-auto">
-    <div className="text-center mb-12">
-      <div className="inline-block mb-3">
-        <span className="washi-tape px-6 py-2 text-base md:text-xl font-bold">Kata Mereka 💬</span>
-      </div>
-      <p className="text-on-surface-variant italic font-serif text-xs sm:text-sm mt-2">
-        Real reviews dari customer setia kami
-      </p>
-    </div>
-
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-6">
-      {REVIEWS.map((review, i) => {
-        const rotations = ["-rotate-2", "rotate-1", "-rotate-1"];
-        const colors = [
-          "bg-[#FFF9B0]",  // kuning sticky note
-          "bg-[#FFD6E0]",  // pink
-          "bg-[#B5EAD7]",  // mint
-        ];
-        const shadows = [
-          "shadow-[4px_6px_0px_rgba(0,0,0,0.08)]",
-          "shadow-[4px_6px_0px_rgba(0,0,0,0.08)]",
-          "shadow-[4px_6px_0px_rgba(0,0,0,0.08)]",
-        ];
-        return (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 30, rotate: 0 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            whileHover={{ y: -6, rotate: 0, scale: 1.03 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.1, type: "spring", stiffness: 200 }}
-            className={`${colors[i]} ${rotations[i]} ${shadows[i]} rounded-sm p-5 md:p-6 relative cursor-default`}
-            style={{ minHeight: 200 }}
-          >
-            {/* Pin di atas sticky note */}
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-5 h-5 bg-primary/80 rounded-full shadow-md border-2 border-white z-10" />
-
-            {/* Stars */}
-            <div className="flex text-amber-500 mb-3 mt-2">
-              {[...Array(review.rating)].map((_, s) => (
-                <Star key={s} size={13} fill="currentColor" />
-              ))}
+      <section className="py-14 md:py-24 bg-secondary-container/20 px-4 overflow-hidden">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="inline-block mb-3">
+              <span className="washi-tape px-6 py-2 text-base md:text-xl font-bold">Kata Mereka 💬</span>
             </div>
-
-            <p className="text-gray-700 text-xs sm:text-sm leading-relaxed font-medium mb-5"
-               style={{ fontFamily: "'Patrick Hand', 'Caveat', cursive, sans-serif" }}>
-              "{review.text}"
+            <p className="text-on-surface-variant italic font-serif text-xs sm:text-sm mt-2">
+              Real reviews dari customer setia kami
             </p>
+          </div>
 
-            <div className="flex items-center gap-2 mt-auto">
-              <div className="w-7 h-7 bg-white/60 rounded-full flex items-center justify-center text-gray-600 font-bold text-xs flex-shrink-0 border border-white/80">
-                {review.name[0]}
-              </div>
-              <div>
-                <p className="text-xs font-bold text-gray-700">{review.name}</p>
-                <p className="text-[9px] text-gray-500 font-medium">{review.tag}</p>
-              </div>
-            </div>
-          </motion.div>
-        );
-      })}
-    </div>
-  </div>
-</section>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-6">
+            {REVIEWS.map((review, i) => {
+              const rotations = ["-rotate-2", "rotate-1", "-rotate-1"];
+              const colors = [
+                "bg-[#FFF9B0]",  
+                "bg-[#FFD6E0]",  
+                "bg-[#B5EAD7]",  
+              ];
+              const shadows = [
+                "shadow-[4px_6px_0px_rgba(0,0,0,0.08)]",
+                "shadow-[4px_6px_0px_rgba(0,0,0,0.08)]",
+                "shadow-[4px_6px_0px_rgba(0,0,0,0.08)]",
+              ];
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30, rotate: 0 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  whileHover={{ y: -6, rotate: 0, scale: 1.03 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, type: "spring", stiffness: 200 }}
+                  className={`${colors[i]} ${rotations[i]} ${shadows[i]} rounded-sm p-5 md:p-6 relative cursor-default`}
+                  style={{ minHeight: 200 }}
+                >
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-5 h-5 bg-primary/80 rounded-full shadow-md border-2 border-white z-10" />
 
-      {/* ── Bundle Banner ── */}
-      <section className="py-10 md:py-16 px-4 bg-surface">
+                  <div className="flex text-amber-500 mb-3 mt-2">
+                    {[...Array(review.rating)].map((_, s) => (
+                      <Star key={s} size={13} fill="currentColor" />
+                    ))}
+                  </div>
+
+                  <p className="text-gray-700 text-xs sm:text-sm leading-relaxed font-medium mb-5"
+                     style={{ fontFamily: "'Patrick Hand', 'Caveat', cursive, sans-serif" }}>
+                    "{review.text}"
+                  </p>
+
+                  <div className="flex items-center gap-2 mt-auto">
+                    <div className="w-7 h-7 bg-white/60 rounded-full flex items-center justify-center text-gray-600 font-bold text-xs flex-shrink-0 border border-white/80">
+                      {review.name[0]}
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-gray-700">{review.name}</p>
+                      <p className="text-[9px] text-gray-500 font-medium">{review.tag}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 💡 UPGRADED: Bundle Banner Section ── */}
+      <section className="py-14 md:py-20 px-4 bg-surface">
         <div className="max-w-5xl mx-auto">
           <motion.div
-            whileHover={{ scale: 1.01 }}
-            className="bg-secondary-container/50 border-2 border-dashed border-secondary-container p-8 md:p-12 rounded-[1.5rem] md:rounded-[2rem] text-center relative overflow-hidden"
+            whileHover={{ y: -4 }}
+            className="bg-gradient-to-br from-primary-container/30 to-secondary-container/40 border-2 border-dashed border-primary/30 p-6 md:p-12 rounded-[2rem] relative overflow-hidden shadow-sm"
           >
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-display font-bold text-primary mb-3 italic">
-              Bundle & Save 5%
-            </h2>
-            <p className="text-on-secondary-container text-sm md:text-base mb-6 max-w-md mx-auto leading-relaxed">
-              Pick a scrapbook, 2 keychains, and 5 stickers to create the ultimate gift package and unlock a 5% discount!
-            </p>
-            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => onNavigate("catalog")}
-              className="px-8 py-3 bg-primary text-white font-bold rounded-full shadow-lg shadow-primary/20 text-sm sm:text-base">
-              Build My Bundle
-            </motion.button>
+            {/* Tag Diskon Pojok Atas */}
+            <motion.div 
+              animate={{ rotate: [12, 8, 12] }}
+              transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+              className="absolute top-4 right-4 md:top-8 md:right-8 bg-primary text-white text-xs font-black px-4 py-2 rounded-full shadow-md rotate-12 z-10"
+            >
+              🎉 SAVE 5%
+            </motion.div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center relative z-10">
+              <div className="lg:col-span-3 text-left">
+                <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-on-surface mb-3 flex items-center gap-2">
+                  Mix & Match Bundle 🧸
+                </h2>
+                <p className="text-on-surface-variant text-sm md:text-base mb-6 max-w-md leading-relaxed">
+                  Bikin kado impianmu makin hemat! Kumpulin isi kotramu sekarang & klaim potongan harga spesial otomatis.
+                </p>
+
+                {/* Visual Checklist Resep Paket Kiriman */}
+                <div className="flex flex-col gap-2.5 mb-6">
+                  {[
+                    "1x Craft Scrapbook Pilihanmu",
+                    "2x Custom Acrylic Keychain",
+                    "5x Premium Sticker Sheet"
+                  ].map((recipe, index) => (
+                    <div key={index} className="flex items-center gap-2 text-xs sm:text-sm font-medium text-on-surface-variant">
+                      <div className="h-5 w-5 rounded-full bg-primary/20 text-primary flex items-center justify-center flex-shrink-0">
+                        <Check size={12} className="stroke-[3]" />
+                      </div>
+                      <span>{recipe}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Visual Box Progress Simpel Ala Game */}
+              <div className="lg:col-span-2 bg-white/70 backdrop-blur-sm p-5 rounded-2xl border border-white flex flex-col items-center justify-center text-center shadow-inner">
+                <p className="text-[11px] font-bold text-primary uppercase tracking-wider mb-3">Your Bundle Progress</p>
+                <div className="flex items-center justify-center gap-2 mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-sm font-bold text-primary">📖</div>
+                  <Plus size={14} className="text-on-surface-variant" />
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-sm font-bold text-primary">🔑</div>
+                  <Plus size={14} className="text-on-surface-variant" />
+                  <div className="w-12 h-12 rounded-xl bg-primary-container text-primary flex items-center justify-center text-sm font-bold animate-pulse">🎁</div>
+                </div>
+                <motion.button 
+                  whileHover={{ scale: 1.03 }} 
+                  whileTap={{ scale: 0.97 }} 
+                  onClick={() => onNavigate("catalog")}
+                  className="w-full py-3 bg-primary text-white text-xs sm:text-sm font-bold rounded-xl shadow-md shadow-primary/20 flex items-center justify-center gap-1.5"
+                >
+                  Build My Bundle <ArrowRight size={14} />
+                </motion.button>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* ── Personalized Note ── */}
-      <section className="py-12 md:py-24 bg-surface-container-low/50 px-4">
+      {/* ── 💡 UPGRADED: Personalized Note Section ── */}
+      <section className="py-12 md:py-24 bg-surface-container-low/40 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="bg-white rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-16 border border-surface-container-highest grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-            <div>
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-display font-bold text-on-surface mb-4">
-                Customized Just for You
+          <div className="bg-white rounded-[2rem] p-6 md:p-14 border border-surface-container-highest grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+            
+            {/* Bagian Teks & Interaksi */}
+            <div className="lg:col-span-6 text-left">
+              <span className="text-xs font-bold text-primary tracking-widest uppercase mb-2 block">The Handcrafted Touch 💌</span>
+              <h2 className="text-2xl sm:text-3xl font-display font-black text-on-surface mb-4 leading-snug">
+                Made With Love, Just for You
               </h2>
-              <p className="text-on-surface-variant leading-relaxed mb-6 text-sm sm:text-base">
-                Every order comes with a personalized hand-drawn thank you note and a sprinkle of kitty magic. From the way we wrap your goodies to the handwritten names on every envelope, your package is a labor of love.
+              <p className="text-on-surface-variant leading-relaxed mb-6 text-xs sm:text-sm">
+                Setiap paket yang keluar dari workshop kami dibungkus penuh kehangatan. Kamu bakal dapetin kertas ucapan terima kasih spesial yang digambar dan ditulis langsung pakai tangan.
               </p>
-              <div className="flex gap-3">
-                <div className="p-3 bg-primary-container/30 text-primary rounded-xl"><Sparkles size={22} /></div>
-                <div className="p-3 bg-secondary-container/30 text-secondary rounded-xl"><Heart size={22} /></div>
+              
+              {/* 💡 UX ENHANCEMENT: Input Interaktif Pengikat Emosi */}
+              <div className="bg-surface p-4 rounded-xl border border-surface-container-highest max-w-sm">
+                <label className="block text-[11px] font-bold text-on-surface-variant uppercase tracking-wider mb-1.5">
+                  Coba ketik namamu di sini:
+                </label>
+                <input 
+                  type="text" 
+                  maxLength={15}
+                  value={noteName}
+                  onChange={(e) => setNoteName(e.target.value)}
+                  placeholder="Ketik namamu..." 
+                  className="w-full px-3 py-2 bg-white text-sm rounded-lg border border-surface-container-highest text-on-surface placeholder:text-on-surface-variant/40 focus:outline-none focus:border-primary transition-all font-medium"
+                />
               </div>
             </div>
-            <div className="relative flex justify-center">
-              <div className="polaroid rotate-3 max-w-[200px] sm:max-w-[240px] mx-auto">
-                <div className="aspect-[3/4] bg-surface-container-highest flex items-center justify-center mb-4">
-                  <p className="text-on-surface-variant/40 italic text-xs text-center px-4">Your personalized note</p>
+
+            {/* Bagian Visual Hasil Preview Note */}
+            <div className="lg:col-span-6 flex justify-center relative">
+              {/* Hiasan background tape melayang */}
+              <div className="absolute -top-4 left-[25%] bg-primary/20 text-primary text-[10px] font-bold px-3 py-1 rounded-sm rotate-[-6deg] z-10 shadow-sm pointer-events-none">
+                🎀 Myawmories Special Note
+              </div>
+              
+              {/* Surat Fisik Realistis */}
+              <motion.div 
+                layout
+                className="bg-[#FFFDF0] border border-[#EBE3C5] shadow-[5px_5px_15px_rgba(0,0,0,0.05)] rounded-sm p-6 max-w-xs w-full rotate-2 hover:rotate-0 transition-transform duration-300 relative overflow-visible"
+              >
+                {/* Garis-garis tipis binder penambah estetik */}
+                <div className="absolute left-3 top-0 bottom-0 w-[1px] bg-red-200/50" />
+                
+                <div className="pl-4 pt-2">
+                  <p 
+                    className="text-primary font-bold text-base md:text-lg mb-2"
+                    style={{ fontFamily: "'Patrick Hand', 'Caveat', cursive, sans-serif" }}
+                  >
+                    Dear {noteName.trim() || "Bestie"} 🐾,
+                  </p>
+                  <p 
+                    className="text-gray-700 text-xs md:text-sm leading-relaxed mb-4 font-medium"
+                    style={{ fontFamily: "'Patrick Hand', 'Caveat', cursive, sans-serif" }}
+                  >
+                    Thank you so much for adopting this cute little magic package! Semoga kreasi kecil kami ini bisa bikin hari-harimu jadi jauh lebih berwarna ya! Don't forget to keep shining ✨
+                  </p>
+                  
+                  {/* ── 💡 UPGRADED Signature Block: Logo Stamp Style (FIXED TUMPukan) ── */}
+                  <div className="flex justify-between items-end mt-6 border-t border-dashed border-gray-300 pt-3 relative">
+                    {/* Teks penjelas kiri */}
+                    <span className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Hand-drawn with care</span>
+                    
+                    {/* Visual Area Signature/Stempel */}
+                    <div className="text-right flex flex-col items-end gap-1.5 relative z-10">
+                      {/* 💡 FIX: Teks Penutup Stamp Font (Warna padat text-primary) */}
+                      <p 
+                        // 👇 Ganti text-primary/70 (pudar) menjadi text-primary (padat)
+                        className="text-primary font-bold text-sm italic tracking-wide relative z-20"
+                        style={{ fontFamily: "'Caveat', cursive, sans-serif" }}
+                      >
+                        - With love,
+                      </p>
+                      
+                      {/* Visual Logo Jadi Stempel Tinta (Overlapping Tumpukan) */}
+                      <motion.img
+                        initial={{ opacity: 0, rotate: -25, scale: 0.8 }}
+                        animate={{ opacity: 0.8, rotate: -18, scale: 1 }}
+                        transition={{ delay: 0.5, duration: 0.4, type: "spring", stiffness: 300, damping: 20 }}
+                        src="/images/myaw_mories_logo_1779100715275.png"
+                        alt="Myaw Mories Ink Stamp"
+                        className="h-10 w-auto object-contain absolute -bottom-5 -right-3 opacity-80 pointer-events-none z-10" // Overlapping dikit keluar paper
+                      />
+                    </div>
+                  </div>
                 </div>
-                <p className="text-center font-display font-medium text-xs text-on-surface-variant">A little magic for you...</p>
-              </div>
-              <div className="absolute top-2 right-[20%] -rotate-12 hidden sm:block">
-                <div className="w-3 h-10 border-2 border-primary-container rounded-full opacity-50" />
-              </div>
+              </motion.div>
             </div>
+
           </div>
         </div>
       </section>
