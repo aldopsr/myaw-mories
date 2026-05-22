@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import PolaroidCard from "../components/PolaroidCard";
-import { Search, Sparkles, Heart, Star } from "lucide-react";
+import { Search, Sparkles, Heart, Star, PackageSearch } from "lucide-react";
 import { useWishlist } from "../hooks/useWishlist";
 
 interface Product {
@@ -30,6 +30,17 @@ interface CatalogProps {
   wishlist: ReturnType<typeof useWishlist>;
 }
 
+// Skeleton card component
+function SkeletonCard() {
+  return (
+    <div className="animate-pulse">
+      <div className="bg-surface-container-highest rounded-2xl aspect-square mb-3" />
+      <div className="h-4 bg-surface-container-highest rounded-full w-3/4 mb-2" />
+      <div className="h-3 bg-surface-container-highest rounded-full w-1/2" />
+    </div>
+  );
+}
+
 export default function Catalog({ onSelectProduct, wishlist }: CatalogProps) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -50,7 +61,8 @@ export default function Catalog({ onSelectProduct, wishlist }: CatalogProps) {
   });
 
   return (
-    <div className="bg-surface min-h-screen pb-12 relative overflow-hidden">
+    // pb-28 untuk mobile agar konten tidak tertutup bottom nav
+    <div className="bg-surface min-h-screen pb-28 md:pb-12 relative overflow-hidden">
 
       <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }} className="absolute top-10 left-[8%] text-primary/20 pointer-events-none hidden sm:block">
         <Sparkles size={32} />
@@ -70,55 +82,66 @@ export default function Catalog({ onSelectProduct, wishlist }: CatalogProps) {
         </p>
       </section>
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 md:mb-16 relative z-10">
-        <div className="flex flex-col gap-4 bg-white/80 backdrop-blur-md p-3 md:p-5 rounded-3xl border border-surface-container-highest shadow-sm">
-          <div className="relative group">
-            <input
-              type="text"
-              placeholder="Search precious goodies..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 md:py-3.5 bg-surface/50 border border-surface-container-highest rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-300"
-            />
-            <Search className="absolute left-3.5 top-3.5 md:top-4 text-on-surface-variant" size={16} />
-          </div>
-
-          <div className="flex gap-2 overflow-x-auto pb-2 pt-1 scrollbar-none snap-x snap-mandatory">
-            {CATEGORIES.map((cat) => {
-              const isSelected = activeCategory === cat.id;
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => setActiveCategory(cat.id)}
-                  className={`relative px-4 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-colors duration-300 snap-center ${
-                    isSelected ? "text-white" : "text-on-surface-variant hover:bg-primary/5"
-                  }`}
-                >
-                  <span className="relative z-10">{cat.label}</span>
-                  {isSelected && (
-                    <motion.div
-                      layoutId="activeCatBadge"
-                      className="absolute inset-0 bg-primary rounded-full shadow-md shadow-primary/20"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                </button>
-              );
-            })}
-          </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Search */}
+        <div className="relative mb-6 max-w-lg mx-auto">
+          <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50" />
+          <input
+            type="text"
+            placeholder="Search treasures..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-10 pr-4 py-3 bg-white border border-surface-container-highest rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 transition-all"
+          />
         </div>
-      </section>
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Category filter */}
+        <div className="flex gap-2 overflow-x-auto pb-4 mb-8 scrollbar-hide">
+          {CATEGORIES.map((cat) => (
+            <motion.button
+              key={cat.id}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setActiveCategory(cat.id)}
+              className={`flex-shrink-0 px-4 py-2 rounded-full text-xs font-bold transition-all ${
+                activeCategory === cat.id
+                  ? "bg-primary text-white shadow-md shadow-primary/20"
+                  : "bg-white text-on-surface-variant border border-surface-container-highest hover:border-primary/30"
+              }`}
+            >
+              {cat.label}
+            </motion.button>
+          ))}
+        </div>
+
+        {/* Content */}
         {loading ? (
-          <div className="text-center py-24">
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-              className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4"
-            />
-            <p className="text-on-surface-variant italic font-serif text-sm animate-pulse">Summoning treasures...</p>
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 sm:gap-6 lg:gap-12">
+            {Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)}
           </div>
+        ) : filtered.length === 0 ? (
+          // Empty state
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center py-24 flex flex-col items-center"
+          >
+            <div className="w-20 h-20 bg-primary-container/30 rounded-full flex items-center justify-center mb-4">
+              <PackageSearch size={36} className="text-primary/50" />
+            </div>
+            <h3 className="font-display font-bold text-on-surface text-lg mb-2">
+              Hmm, no treasures found 🐱
+            </h3>
+            <p className="text-on-surface-variant text-sm italic font-serif mb-6">
+              Try a different keyword or category!
+            </p>
+            <motion.button
+              whileTap={{ scale: 0.95 }}
+              onClick={() => { setSearchQuery(""); setActiveCategory("All"); }}
+              className="px-6 py-2.5 bg-primary/10 text-primary font-bold text-sm rounded-full hover:bg-primary hover:text-white transition-all"
+            >
+              Reset filters
+            </motion.button>
+          </motion.div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 sm:gap-6 lg:gap-12">
             <AnimatePresence mode="popLayout">
@@ -157,42 +180,14 @@ export default function Catalog({ onSelectProduct, wishlist }: CatalogProps) {
                       <Heart size={15} className={isWish ? "fill-white" : ""} />
                     </motion.button>
 
-                    {/* Seluruh card bisa diklik */}
-                    <div
-                      className="transform transition-transform duration-300 group-hover:scale-[1.02] cursor-pointer"
-                      onClick={() => onSelectProduct(product.id)}
-                    >
-                      <PolaroidCard
-                        image={product.image}
-                        title={product.title}
-                        price={product.price}
-                        className="shadow-md group-hover:shadow-xl transition-shadow duration-300"
-                        rotation={idx % 2 === 0 ? -1.8 : 1.8}
-                        onClick={() => onSelectProduct(product.id)}
-                      />
-                    </div>
-
-                    {/* Tap hint — mobile only, no button */}
-                    <p className="sm:hidden text-center text-[10px] text-on-surface-variant/50 mt-1.5 italic font-serif">
-                      ketuk untuk detail
-                    </p>
+                    <PolaroidCard product={product} onClick={() => onSelectProduct(product.id)} />
                   </motion.div>
                 );
               })}
             </AnimatePresence>
           </div>
         )}
-
-        {!loading && filtered.length === 0 && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="py-20 text-center">
-            <div className="w-16 h-16 bg-primary/5 border-2 border-dashed border-primary/30 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-bounce">
-              <Search size={24} className="text-primary/60" />
-            </div>
-            <p className="text-on-surface-variant font-display font-bold text-sm">Oh no, bestie! No treasures here...</p>
-            <p className="text-on-surface-variant/60 text-xs italic mt-1">Try another magical keyword ✨</p>
-          </motion.div>
-        )}
-      </section>
+      </div>
     </div>
   );
 }

@@ -15,7 +15,8 @@ export default function Wishlist({ items, onRemove, onNavigate, onSelectProduct 
   };
 
   return (
-    <div className="bg-surface min-h-screen pb-32">
+    // pb-28 untuk mobile agar konten tidak tertutup bottom nav
+    <div className="bg-surface min-h-screen pb-28 md:pb-12">
       <section className="pt-20 pb-12 text-center px-4">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
