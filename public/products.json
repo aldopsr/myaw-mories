@@ -17,7 +17,7 @@
       },
       {
         "src": "/images/foto_isi_halaman.png",
-        "previewPdf": null,
+        "previewPdf": "/previews/aniv.pdf",
         "label": "Putih",
         "description": "Setiap halaman didekorasi manual dengan washi tape dan stiker.",
         "sizes": ["15x15 cm", "20x20 cm"],
@@ -26,7 +26,7 @@
       },
       {
         "src": "/images/foto_packaging.png",
-        "previewPdf": null,
+        "previewPdf": "/previews/favoriteperson.pdf",
         "label": "Pink",
         "description": "Dikemas dengan kotak gift premium dan ribbon satin.",
         "sizes": ["Standard box"],
