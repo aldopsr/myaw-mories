@@ -367,7 +367,7 @@ export default function ProductDetail({ productId, onBack, onSelectProduct, wish
             {/* Levels */}
             {activeLevels.length > 0 && (
               <div className="mb-5">
-                <p className="font-display font-extrabold text-on-surface text-xs sm:text-sm mb-2.5">Magic Level</p>
+                <p className="font-display font-extrabold text-on-surface text-xs sm:text-sm mb-2.5">Isi Kertas</p>
                 <div className="grid grid-cols-3 gap-2">
                   {activeLevels.map((level) => (
                     <button
