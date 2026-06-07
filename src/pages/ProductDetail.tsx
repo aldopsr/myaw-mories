@@ -345,7 +345,7 @@ export default function ProductDetail({ productId, onBack, onSelectProduct, wish
             {/* Sizes */}
             {activeSizes.length > 0 && (
               <div className="mb-5">
-                <p className="font-display font-extrabold text-on-surface text-xs sm:text-sm mb-2.5">Select Dimensions</p>
+                <p className="font-display font-extrabold text-on-surface text-xs sm:text-sm mb-2.5">Pilih Orientasi</p>
                 <div className="flex flex-wrap gap-2">
                   {activeSizes.map((size) => (
                     <button
