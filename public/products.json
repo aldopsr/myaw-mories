@@ -32,6 +32,15 @@
         "sizes": ["Standard box"],
         "levels": [],
         "features": ["Premium gift box", "Satin ribbon", "Handwritten thank you card", "Free bubble wrap"]
+      },
+      {
+        "src": "/images/hbd.png",
+        "previewPdf": "/previews/happybirthday.pdf",
+        "label": "Pink",
+        "description": "Dikemas dengan kotak gift premium dan ribbon satin.",
+        "sizes": ["Standard box"],
+        "levels": [],
+        "features": ["Premium gift box", "Satin ribbon", "Handwritten thank you card", "Free bubble wrap"]
       }
     ],
     "description": "Scrapbook dengan dominasi warna merah yang bold, manis, dan gemesin ❤️\nDibuat buat nyimpen berbagai momen favorit kamu dengan vibe yang fun dan nyaman dilihat. Cocok dipakai untuk banyak tema dan bisa diisi pakai foto pilihan kamu sendiri ✨",
