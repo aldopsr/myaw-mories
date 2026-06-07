@@ -9,7 +9,7 @@
       {
         "src": "/images/aniv.png",
         "previewPdf": "/previews/to_my_favorite_person.pdf",
-        "label": "Merah",
+        "label": "Anniversary",
         "description": "Cover scrapbook dengan desain floral pink handmade.",
         "sizes": ["15x15 cm", "20x20 cm"],
         "levels": ["Basic (Stickers only)", "Semi (Tape + Florals)", "Full (All out magic)"],
@@ -18,7 +18,7 @@
       {
         "src": "/images/favoriteperson.png",
         "previewPdf": "/previews/aniv.pdf",
-        "label": "Putih",
+        "label": "Favorite Person",
         "description": "Setiap halaman didekorasi manual dengan washi tape dan stiker.",
         "sizes": ["15x15 cm", "20x20 cm"],
         "levels": ["Basic (Stickers only)", "Semi (Tape + Florals)", "Full (All out magic)"],
@@ -27,7 +27,7 @@
       {
         "src": "/images/forsomeone.png",
         "previewPdf": "/previews/favoriteperson.pdf",
-        "label": "Pink",
+        "label": "For Someone",
         "description": "Dikemas dengan kotak gift premium dan ribbon satin.",
         "sizes": ["Standard box"],
         "levels": [],
@@ -36,7 +36,7 @@
       {
         "src": "/images/happybirthday.png",
         "previewPdf": "/previews/hbd.pdf",
-        "label": "Pink",
+        "label": "Birthday",
         "description": "Dikemas dengan kotak gift premium dan ribbon satin.",
         "sizes": ["Standard box"],
         "levels": [],
@@ -60,7 +60,7 @@
       {
         "src": "/images/aniv.png",
         "previewPdf": "/previews/to_my_favorite_person.pdf",
-        "label": "Merah",
+        "label": "Anniversary",
         "description": "Cover scrapbook dengan desain floral pink handmade.",
         "sizes": ["15x15 cm", "20x20 cm"],
         "levels": ["Basic (Stickers only)", "Semi (Tape + Florals)", "Full (All out magic)"],
@@ -69,7 +69,7 @@
       {
         "src": "/images/favoriteperson.png",
         "previewPdf": "/previews/aniv.pdf",
-        "label": "Putih",
+        "label": "Favorite Person",
         "description": "Setiap halaman didekorasi manual dengan washi tape dan stiker.",
         "sizes": ["15x15 cm", "20x20 cm"],
         "levels": ["Basic (Stickers only)", "Semi (Tape + Florals)", "Full (All out magic)"],
@@ -78,7 +78,7 @@
       {
         "src": "/images/forsomeone.png",
         "previewPdf": "/previews/favoriteperson.pdf",
-        "label": "Pink",
+        "label": "For Someone",
         "description": "Dikemas dengan kotak gift premium dan ribbon satin.",
         "sizes": ["Standard box"],
         "levels": [],
@@ -87,7 +87,7 @@
       {
         "src": "/images/happybirthday.png",
         "previewPdf": "/previews/hbd.pdf",
-        "label": "Pink",
+        "label": "Birthday",
         "description": "Dikemas dengan kotak gift premium dan ribbon satin.",
         "sizes": ["Standard box"],
         "levels": [],
