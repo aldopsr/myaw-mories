@@ -34,8 +34,8 @@
         "features": ["Premium gift box", "Satin ribbon", "Handwritten thank you card", "Free bubble wrap"]
       },
       {
-        "src": "/images/hbd.png",
-        "previewPdf": "/previews/happybirthday.pdf",
+        "src": "/images/happybirthday.png",
+        "previewPdf": "/previews/hbd.pdf",
         "label": "Pink",
         "description": "Dikemas dengan kotak gift premium dan ribbon satin.",
         "sizes": ["Standard box"],
