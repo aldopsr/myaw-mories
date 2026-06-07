@@ -103,6 +103,108 @@
   },
   {
     "id": 3,
+    "title": "Scarpbooks",
+    "category": "Scrapbooks",
+    "price": "Rp 40.000",
+    "image": "/images/forsomeone.png",
+    "images": [
+      {
+        "src": "/images/aniv.png",
+        "previewPdf": "/previews/to_my_favorite_person.pdf",
+        "label": "Anniversary",
+        "description": "Cover scrapbook dengan desain floral pink handmade.",
+        "sizes": ["15x15 cm", "20x20 cm"],
+        "levels": ["Basic (Stickers only)", "Semi (Tape + Florals)", "Full (All out magic)"],
+        "features": ["14 pages of premium art paper", "Softcover with matte finish", "Flexible gold ring binding", "Space for 32 custom photos"]
+      },
+      {
+        "src": "/images/favoriteperson.png",
+        "previewPdf": "/previews/aniv.pdf",
+        "label": "Favorite Person",
+        "description": "Setiap halaman didekorasi manual dengan washi tape dan stiker.",
+        "sizes": ["15x15 cm", "20x20 cm"],
+        "levels": ["Basic (Stickers only)", "Semi (Tape + Florals)", "Full (All out magic)"],
+        "features": ["Washi tape imported", "Dried flower decoration", "Hand-lettering option"]
+      },
+      {
+        "src": "/images/forsomeone.png",
+        "previewPdf": "/previews/favoriteperson.pdf",
+        "label": "For Someone",
+        "description": "Dikemas dengan kotak gift premium dan ribbon satin.",
+        "sizes": ["Standard box"],
+        "levels": [],
+        "features": ["Premium gift box", "Satin ribbon", "Handwritten thank you card", "Free bubble wrap"]
+      },
+      {
+        "src": "/images/happybirthday.png",
+        "previewPdf": "/previews/hbd.pdf",
+        "label": "Birthday",
+        "description": "Dikemas dengan kotak gift premium dan ribbon satin.",
+        "sizes": ["Standard box"],
+        "levels": [],
+        "features": ["Premium gift box", "Satin ribbon", "Handwritten thank you card", "Free bubble wrap"]
+      }
+    ],
+    "description": "Scrapbook dengan dominasi warna merah yang bold, manis, dan gemesin ❤️\nDibuat buat nyimpen berbagai momen favorit kamu dengan vibe yang fun dan nyaman dilihat. Cocok dipakai untuk banyak tema dan bisa diisi pakai foto pilihan kamu sendiri ✨",
+    "features": ["Theme : Red", "Size : A5 Portrait", "Photo : Custom by customer", "Version : Digital / Print", "Style : Fun & Cute"],
+    "sizes": ["15x15 cm", "20x20 cm"],
+    "levels": ["Basic (Stickers only)", "Semi (Tape + Florals)", "Full (All out magic)"],
+    "stock": true,
+    "previewPdf": "/previews/to_my_favorite_person.pdf"
+  },
+  {
+    "id": 4,
+    "title": "Scarpbooks",
+    "category": "Scrapbooks",
+    "price": "Rp 40.000",
+    "image": "/images/happybirthday.png",
+    "images": [
+      {
+        "src": "/images/aniv.png",
+        "previewPdf": "/previews/to_my_favorite_person.pdf",
+        "label": "Anniversary",
+        "description": "Cover scrapbook dengan desain floral pink handmade.",
+        "sizes": ["15x15 cm", "20x20 cm"],
+        "levels": ["Basic (Stickers only)", "Semi (Tape + Florals)", "Full (All out magic)"],
+        "features": ["14 pages of premium art paper", "Softcover with matte finish", "Flexible gold ring binding", "Space for 32 custom photos"]
+      },
+      {
+        "src": "/images/favoriteperson.png",
+        "previewPdf": "/previews/aniv.pdf",
+        "label": "Favorite Person",
+        "description": "Setiap halaman didekorasi manual dengan washi tape dan stiker.",
+        "sizes": ["15x15 cm", "20x20 cm"],
+        "levels": ["Basic (Stickers only)", "Semi (Tape + Florals)", "Full (All out magic)"],
+        "features": ["Washi tape imported", "Dried flower decoration", "Hand-lettering option"]
+      },
+      {
+        "src": "/images/forsomeone.png",
+        "previewPdf": "/previews/favoriteperson.pdf",
+        "label": "For Someone",
+        "description": "Dikemas dengan kotak gift premium dan ribbon satin.",
+        "sizes": ["Standard box"],
+        "levels": [],
+        "features": ["Premium gift box", "Satin ribbon", "Handwritten thank you card", "Free bubble wrap"]
+      },
+      {
+        "src": "/images/happybirthday.png",
+        "previewPdf": "/previews/hbd.pdf",
+        "label": "Birthday",
+        "description": "Dikemas dengan kotak gift premium dan ribbon satin.",
+        "sizes": ["Standard box"],
+        "levels": [],
+        "features": ["Premium gift box", "Satin ribbon", "Handwritten thank you card", "Free bubble wrap"]
+      }
+    ],
+    "description": "Scrapbook dengan dominasi warna merah yang bold, manis, dan gemesin ❤️\nDibuat buat nyimpen berbagai momen favorit kamu dengan vibe yang fun dan nyaman dilihat. Cocok dipakai untuk banyak tema dan bisa diisi pakai foto pilihan kamu sendiri ✨",
+    "features": ["Theme : Red", "Size : A5 Portrait", "Photo : Custom by customer", "Version : Digital / Print", "Style : Fun & Cute"],
+    "sizes": ["15x15 cm", "20x20 cm"],
+    "levels": ["Basic (Stickers only)", "Semi (Tape + Florals)", "Full (All out magic)"],
+    "stock": true,
+    "previewPdf": "/previews/to_my_favorite_person.pdf"
+  },
+  {
+    "id": 5,
     "title": "Sparkle Paw Charm",
     "category": "Acrylic Keychains",
     "price": "Rp 35.000",
